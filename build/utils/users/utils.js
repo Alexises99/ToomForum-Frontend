@@ -22,19 +22,26 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const app_1 = require("./app");
-const http_1 = __importDefault(require("http"));
-const config_1 = __importDefault(require("./utils/config"));
-const logger = __importStar(require("./utils/logger"));
-const db_1 = require("./utils/db");
-const server = http_1.default.createServer(app_1.app);
-(0, db_1.connectToDataBase)()
-    .then(() => {
-    server.listen(config_1.default.PORT, () => {
-        logger.info(`Server listening on port ${config_1.default.PORT}`);
-    });
-}).catch((err) => logger.error(`${err}`));
+exports.toNewUser = void 0;
+const check = __importStar(require("../checkers"));
+const toNewUser = (object) => {
+    const toNewUser = {
+        username: parseUsername(object.username),
+        password: parsePassword(object.password)
+    };
+    return toNewUser;
+};
+exports.toNewUser = toNewUser;
+const parseUsername = (username) => {
+    if (!username || !check.isString(username)) {
+        throw new Error(`Incorrect or missing username ${username}`);
+    }
+    return username;
+};
+const parsePassword = (password) => {
+    if (!password || !check.isString(password)) {
+        throw new Error(`Incorrect or missing password ${password}`);
+    }
+    return password;
+};

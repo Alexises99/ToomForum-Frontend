@@ -1,18 +1,17 @@
-import express from 'express'
-import cors from 'cors'
+import { app } from "./app";
+import http from 'http'
+import config from "./utils/config";
+import * as logger from "./utils/logger"
+import { connectToDataBase } from "./utils/db";
 
-const app = express()
+const server = http.createServer(app)
 
-app.use(cors())
-app.use(express.static('build'))
-app.use(express.json())
+connectToDataBase()
+  .then (() => {
+    server.listen(config.PORT, () => {
+      logger.info(`Server listening on port ${config.PORT}`)
+    })
+ }
+  ).catch((err: string) => logger.error(`${err}`))
 
-app.get('/api/ping', (_req, res) => {
-  res.end("pong")
-})
 
-const PORT = process.env.PORT || 3001
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
-})
