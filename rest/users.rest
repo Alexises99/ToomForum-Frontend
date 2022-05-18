@@ -1,15 +1,15 @@
 GET http://localhost:3001/api/users
 
 ###
-GET http://localhost:3001/api/users/1
+GET http://localhost:3001/api/users/3
 
 ###
 POST http://localhost:3001/api/users
 Content-Type: application/json
 
 {
-  "username": "Lowrins",
-  "password": "123123123"
+  "username": "ranaldo",
+  "password": "123123"
 }
 
 ###

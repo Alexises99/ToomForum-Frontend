@@ -6,4 +6,10 @@ const PORT = process.env.PORT || 3001
 
 const POSTGREESQL = process.env.DATABASE_URL
 
-export default {PORT, POSTGREESQL}
+const SECRET = process.env.SECRET
+
+export default {
+  PORT, 
+  POSTGREESQL,
+  SECRET
+}

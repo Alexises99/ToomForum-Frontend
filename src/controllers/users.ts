@@ -1,6 +1,7 @@
 import { RequestHandler, Router } from "express"
+import { User } from "../models/user"
 import usersService from '../services/users'
-import { toNewUser } from "../utils/users/utils"
+import { toNewUser } from "../utils/users/parsers"
 
 const usersRouter = Router()
 
@@ -9,22 +10,22 @@ usersRouter.get('/', (async (_req, res) => {
   return res.json(users)
 }) as RequestHandler)
 
-usersRouter.post('/', (async (req, res) => {
+usersRouter.post('/', (async (req, res, next) => {
   try {
     const newUserEntry = toNewUser(req.body)
-    const user = await usersService.addUser(newUserEntry)
+    const user = await usersService.addUser(newUserEntry as User)
     res.json(user)
   } catch (err) {
-    res.status(400).json({err})
+    next(err)
   }
 }) as RequestHandler)
 
-usersRouter.get('/:id', (async (req, res) => {
-  const user = await usersService.getSingleUser(+req.params.id)
-  if (user) {
+usersRouter.get('/:id', (async (req, res, next) => {
+  try {
+    const user = await usersService.getSingleUser(+req.params.id)
     res.json(user)
-  } else {
-    res.status(404).end()
+  } catch (err) {
+    next(err)
   }
 }) as RequestHandler)
 
@@ -34,7 +35,7 @@ usersRouter.delete('/:id', (async (req, res) => {
     await usersService.deleteUser(+req.params.id)
     res.status(204).end()
   } catch (err) {
-    res.status(404).end()
+    console.log(err)
   }
 }) as RequestHandler)
 
@@ -46,7 +47,6 @@ usersRouter.put('/:id', (async (req, res) => {
     }
   } catch (err) {
     console.log(err)
-    res.status(404).end()
   }
   
 }) as RequestHandler)

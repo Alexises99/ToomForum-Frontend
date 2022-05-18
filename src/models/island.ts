@@ -2,33 +2,37 @@ import { Model, DataTypes, InferAttributes, InferCreationAttributes, CreationOpt
 import {sequelize} from '../utils/db'
 
 
-interface UserEntry {
+interface IslandEntry {
   id: number
   username: string
   password: string
 }
 
-type NewUserEntry = Omit<UserEntry, 'id'>
+type NewIslandEntry = Omit<IslandEntry, 'id'>
 
 
-class User extends Model<InferAttributes<User>, InferCreationAttributes<User>>{
+class Island extends Model<InferAttributes<Island>, InferCreationAttributes<Island>>{
   declare id: CreationOptional<number>
-  declare username: string
-  declare password: string
+  declare fruit: string
+  declare dreamCode: string
+  declare name: string
 }
 
-User.init({
+Island.init({
   id:{
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  username: {
+  fruit: {
     type: DataTypes.TEXT,
     allowNull: false,
+  },
+  dreamCode: {
+    type: DataTypes.TEXT,
     unique: true
   },
-  password: {
+  name: {
     type: DataTypes.TEXT,
     allowNull: false,
     unique: true
@@ -37,11 +41,11 @@ User.init({
   sequelize,
   underscored: true,
   timestamps: false,
-  modelName: 'user',
+  modelName: 'island',
 })
 
 export  {
-  User,
-  NewUserEntry,
-  UserEntry
+  Island,
+  NewIslandEntry,
+  IslandEntry
 }
