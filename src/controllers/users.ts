@@ -1,29 +1,35 @@
-import { RequestHandler, Router } from "express"
+import { RequestHandler, Router} from "express"
 import { User } from "../models/user"
 import usersService from '../services/users'
 import { toNewUser } from "../utils/users/parsers"
+import tokens from "../middlewares/tokens"
+import NotAuthorizedException from "../exceptions/NotAuthorized"
 
 const usersRouter = Router()
 
 usersRouter.get('/', (async (_req, res) => {
   const users = await usersService.getUsers()
-  return res.json(users)
+  res.json(users)
 }) as RequestHandler)
 
 usersRouter.post('/', (async (req, res, next) => {
   try {
     const newUserEntry = toNewUser(req.body)
     const user = await usersService.addUser(newUserEntry as User)
-    res.json(user)
+    res.status(201).json(user)
   } catch (err) {
     next(err)
   }
 }) as RequestHandler)
 
-usersRouter.get('/:id', (async (req, res, next) => {
+usersRouter.get('/:id', tokens.getUserFromToken, (async (req, res, next) => {
   try {
-    const user = await usersService.getSingleUser(+req.params.id)
-    res.json(user)
+    if(req.user?.id === +req.params.id) {
+      const user = await usersService.getSingleUser(+req.params.id)
+      res.json(user)
+    } else {
+      next(new NotAuthorizedException('not authorized, you are not this user'))
+    }
   } catch (err) {
     next(err)
   }

@@ -3,12 +3,20 @@
     "target": "ES6",
     "outDir": "./build/",
     "module": "commonjs",
+    "types": ["node", "jest"],
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
-    "resolveJsonModule": true
-  }
+    "resolveJsonModule": true,
+    "typeRoots": [
+      "@types",
+      "./node_modules/@types",
+    ],
+  },
+  "exclude": [
+    "tests/**/*.test.ts"
+  ]
 }

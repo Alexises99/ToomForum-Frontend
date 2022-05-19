@@ -5,7 +5,6 @@ import {NewUserEntry} from "../../models/user";
 import * as check from '../checkers'
 
 const toNewUser = (object: any): NewUserEntry=> {
-  console.log(object)
   const toNewUser: NewUserEntry = {
     username: parseUsername(object.username),
     password: parsePassword(object.password)

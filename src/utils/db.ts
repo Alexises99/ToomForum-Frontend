@@ -5,7 +5,8 @@ import * as logger from './logger'
 const sequelize = new Sequelize(config.POSTGREESQL as string, {
   dialectOptions: {
     ssl: false
-  }
+  },
+  logging: true
 })
 
 const connectToDataBase = async (): Promise<null> => {

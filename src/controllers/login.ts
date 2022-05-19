@@ -4,7 +4,7 @@ import { toNewUser } from "../utils/users/parsers"
 import * as bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import config from '../utils/config'
-import { NewUserEntry } from "../models/user"
+import { UserEntry } from "../models/user"
 
 const loginRouter = Router()
 
@@ -27,9 +27,9 @@ loginRouter.post('/', (async (req,res) => {
     })
   }
 
-  const userForToken: NewUserEntry = {
+  const userForToken: Omit<UserEntry, 'password'> = {
     username: user.username,
-    password: user.password
+    id: user.id
   }
 
   const username = userForToken.username

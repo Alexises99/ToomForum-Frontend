@@ -8,7 +8,6 @@ const errorHandler= (err: HttpException, _req: Request, res: Response, next: Nex
 
   error(message)
   
-
   res
     .status(status)
     .json({
