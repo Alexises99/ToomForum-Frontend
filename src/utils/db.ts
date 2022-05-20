@@ -6,7 +6,7 @@ const sequelize = new Sequelize(config.POSTGREESQL as string, {
   dialectOptions: {
     ssl: false
   },
-  logging: true
+  logging: false
 })
 
 const connectToDataBase = async (): Promise<null> => {

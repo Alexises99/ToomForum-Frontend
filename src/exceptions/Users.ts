@@ -1,8 +1,8 @@
 import HttpException from "./HttpException";
 
 class UserNotFoundException extends HttpException {
-  constructor(id: number) {
-    super(404, `User with id ${id} not found`)
+  constructor(username: string) {
+    super(404, `User with id ${username} not found`)
   }
 }
 

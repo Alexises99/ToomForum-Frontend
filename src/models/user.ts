@@ -1,32 +1,24 @@
-import { Model, DataTypes, InferAttributes, InferCreationAttributes, CreationOptional } from "sequelize"
+import { Model, DataTypes, InferAttributes, InferCreationAttributes } from "sequelize"
 import {sequelize} from '../utils/db'
 
 
 interface UserEntry {
-  id: number
   username: string
   password: string
 }
 
-type NewUserEntry = Omit<UserEntry, 'id'>
+type NonSensitiveInfo = Omit<UserEntry, 'password'>
 
 
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>>{
-  declare id: CreationOptional<number>
   declare username: string
   declare password: string
 }
 
 User.init({
-  id:{
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
   username: {
     type: DataTypes.TEXT,
-    allowNull: false,
-    unique: true
+    primaryKey: true,
   },
   password: {
     type: DataTypes.TEXT,
@@ -42,6 +34,6 @@ User.init({
 
 export  {
   User,
-  NewUserEntry,
+  NonSensitiveInfo,
   UserEntry
 }

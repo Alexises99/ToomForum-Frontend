@@ -1,6 +1,6 @@
 import { UniqueConstraintError, ValidationError } from "sequelize"
 import { UserBadRequestException, UserNotFoundException } from "../exceptions/Users"
-import { NewUserEntry } from "../models/user"
+import { UserEntry } from "../models/user"
 import { User } from "../models"
 import * as bcrypt from 'bcrypt'
 
@@ -9,16 +9,30 @@ const getUsers = async (): Promise<Array<User>> => {
   return users
 }
 
-const getSingleUser = async (id: number): Promise<User> => {
-  const user = await User.findByPk(id)
-  if (user){
-    return user
+const getNonSensitiveUserInformation = (users: Array<User> | User) => {
+  if (users instanceof Array) {
+    return users.map(user => {
+      return {
+        username: user.username
+      }
+    })
   } else {
-    throw new UserNotFoundException(id)
+    return {
+      username: users.username
+    }
   }
 }
 
-const addUser = async (newUserEntry: NewUserEntry): Promise<User | void>  => {
+const getSingleUser = async (username: string): Promise<User> => {
+  const user = await User.findByPk(username)
+  if (user){
+    return user
+  } else {
+    throw new UserNotFoundException(username)
+  }
+}
+
+const addUser = async (newUserEntry: UserEntry): Promise<User | void>  => {
   try {
     const saltRounds = 10
     newUserEntry.password = await bcrypt.hash(newUserEntry.password, saltRounds)
@@ -35,15 +49,15 @@ const addUser = async (newUserEntry: NewUserEntry): Promise<User | void>  => {
   }
 }
 
-const deleteUser = async (id: number): Promise<void> => {
-  const user = await getSingleUser(id)
+const deleteUser = async (username: string): Promise<void> => {
+  const user = await getSingleUser(username)
   if (user) {
     await user.destroy()
   }
 }
 
-const updateUser =  async (id: number, newUserEntry: NewUserEntry): Promise<User | null> => {
-  const user = await getSingleUser(id)
+const updateUser =  async (username: string, newUserEntry: UserEntry): Promise<User | null> => {
+  const user = await getSingleUser(username)
   if (user) {
     user.password = newUserEntry.password
     await user.save()
@@ -57,5 +71,6 @@ export default {
   getSingleUser,
   addUser,
   deleteUser,
-  updateUser
+  updateUser,
+  getNonSensitiveUserInformation
 }
