@@ -5,10 +5,11 @@ import * as bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import config from '../utils/config'
 import { UserEntry } from "../models/user"
+import NotAuthorizedException from "../exceptions/NotAuthorized"
 
 const loginRouter = Router()
 
-loginRouter.post('/', (async (req,res) => {
+loginRouter.post('/', (async (req,res, next) => {
   const body = toNewUser(req.body)
 
   const user = await User.findOne({
@@ -23,9 +24,9 @@ loginRouter.post('/', (async (req,res) => {
   
   
   if (!(passwordCorrect && user)) {
-    return res.status(401).json({
-      error: 'invalid username or password'
-    })
+    const err = new NotAuthorizedException('invalid username or password')
+    next(err)
+    return
   }
 
   const userForToken: Omit<UserEntry, 'password'> = {

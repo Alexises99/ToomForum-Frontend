@@ -28,7 +28,6 @@ describe('Users tests', () => {
       .expect(200)
       .expect('Content-Type', /application\/json/)
       
-    
     expect(response.body).toEqual(
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       expect.arrayContaining(userTestHelper.initialUsers.map(user => expect.objectContaining({username: user.username})))
@@ -82,8 +81,31 @@ describe('Users tests', () => {
       .expect('Content-Type', /application\/json/)
     
     expect(responseApi.body).toBeDefined()
-    console.log(responseApi.body)
     expect(user).toMatchObject(responseApi.body)
+  })
+
+  test('400 when dont provide params and the valid message', async () => {
+    const newUser: Omit<UserEntry, 'password'> = {
+      username: 'monje',
+    }
+
+    const response = await api
+      .post(`/api/users`)
+      .send(newUser)
+      .expect(400)
+
+    expect(response.body.message).toBe('Incorrect or missing password undefined')
+  })
+
+  test('400 when username is repeated', async () => {
+    const user= userTestHelper.initialUsers[0]
+
+    const response = await api
+      .post(`/api/users`)
+      .send(user)
+      .expect(400)
+
+    expect(response.body.message).toBe('username must be unique')
   })
 
   test('a user cannot get another user with a different username', async () => {
@@ -104,7 +126,34 @@ describe('Users tests', () => {
     
   })
 
+  test('can delete a user', async () => {
 
+    const user= userTestHelper.initialUsers[0]
+    const responseToken = await getToken(user)
+
+    const token = responseToken.body.token as string
+
+    await api
+      .delete(`/api/users/${user.username}`)
+      .set('Authorization', `bearer ${token}`)
+      .expect(204)
+  })
+
+  test('a different user cannot delete a user', async () => {
+
+    const user= userTestHelper.initialUsers[0]
+    const userToShow = userTestHelper.initialUsers[1]
+    const responseToken = await getToken(user)
+
+    const token = responseToken.body.token as string
+
+    const response = await api
+      .delete(`/api/users/${userToShow.username}`)
+      .set('Authorization', `bearer ${token}`)
+      .expect(401)
+
+    expect(response.body.message).toBe('not authorized, you are not this user')
+  })
 
   afterAll(async () => {
     await sequelize.close()

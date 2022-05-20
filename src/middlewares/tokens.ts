@@ -12,7 +12,7 @@ const tokenExtractor: RequestHandler = (req: Request, _res: Response, next: Next
   next()
 }
 
-const getUserFromToken: RequestHandler = (req: Request, res: Response, next: NextFunction) => {
+const getUserFromToken: RequestHandler = (req: Request, _res: Response, next: NextFunction) => {
   const token = req.token
   if (token) {
     try {
@@ -29,7 +29,8 @@ const getUserFromToken: RequestHandler = (req: Request, res: Response, next: Nex
       }
     }
   } else {
-    res.status(401).json({error: 'Missing token'})
+    const error = new NotAuthorizedException('Missing token')
+    next(error)
     return
   }
   next()

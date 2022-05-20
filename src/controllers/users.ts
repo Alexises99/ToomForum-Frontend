@@ -37,10 +37,14 @@ usersRouter.get('/:username', tokens.getUserFromToken, (async (req, res, next) =
 }) as RequestHandler)
 
 //Borrar entrada en islands
-usersRouter.delete('/:username', (async (req, res) => {
+usersRouter.delete('/:username', tokens.getUserFromToken, (async (req, res, next) => {
   try {
-    await usersService.deleteUser(req.params.username)
-    res.status(204).end()
+    if (req.user?.username === req.params.username) {
+      await usersService.deleteUser(req.params.username)
+      res.status(204).end()
+    } else {
+      next(new NotAuthorizedException('not authorized, you are not this user'))
+    }
   } catch (err) {
     console.log(err)
   }
