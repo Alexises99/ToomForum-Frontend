@@ -1,0 +1,21 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.app = void 0;
+const express_1 = __importDefault(require("express"));
+const cors_1 = __importDefault(require("cors"));
+const users_1 = __importDefault(require("./controllers/users"));
+const login_1 = __importDefault(require("./controllers/login"));
+const errorHandler_1 = __importDefault(require("./middlewares/errorHandler"));
+const tokens_1 = __importDefault(require("./middlewares/tokens"));
+const app = (0, express_1.default)();
+exports.app = app;
+app.use((0, cors_1.default)());
+app.use(express_1.default.static('build'));
+app.use(express_1.default.json());
+app.use(tokens_1.default.tokenExtractor);
+app.use('/api/users', users_1.default);
+app.use('/api/login', login_1.default);
+app.use(errorHandler_1.default);
