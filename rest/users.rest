@@ -1,5 +1,4 @@
 GET http://localhost:3001/api/users
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJhbmFsZG8iLCJwYXNzd29yZCI6IiQyYiQxMCRMR2NPemZuR3RCZDcxU3NtNm5xM1dlN1lVdi9acTU3NHBHYm05bVRsdE8uLmJZNjBYMXI2UyIsImlhdCI6MTY1Mjk3ODM0N30.j07a_oQa4B9A3XspnNNHLqysCklUdtkYOoOiwPKMU7E
 
 ###
 GET http://localhost:3001/api/users/ubuntininin
