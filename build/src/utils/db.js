@@ -43,7 +43,7 @@ const sequelize = new sequelize_1.Sequelize(config_1.default.POSTGREESQL, {
     dialectOptions: {
         ssl: {
             require: true,
-            rejectUnauthorized: false
+            rejectUnathorized: false
         }
     },
     logging: false

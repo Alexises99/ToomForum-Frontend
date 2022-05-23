@@ -9,7 +9,7 @@ let POSTGREESQL = process.env.DATABASE_URL
 if (process.env.NODE_ENV === 'test') {
   POSTGREESQL = process.env.DATABASE_URL_TEST
 } else if (process.env.NODE_ENV === 'development') {
-  POSTGREESQL = process.env.DATABASE_URL_TEST_DEV
+  POSTGREESQL = process.env.DATABASE_URL_DEV
 }
 const SECRET = process.env.SECRET
 
