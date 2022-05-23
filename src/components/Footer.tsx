@@ -10,14 +10,16 @@ const Footer = () => {
           <div className="flex flex-col justify-between lg:justify-self-start lg:col-span-3">
             <img src={logo} className="w-44 h-28 mb-7"/>
             <div className="lex justify-between items-center">
-              <a href="https://github.com/Alexises99"><img src={github} className="w-8 h-8 text-white hover:text-green-400 fill-current cursor-pointer"/></a>
+              <Link to="https://github.com/Alexises99">
+                <img src={github} className="w-8 h-8 text-white hover:text-green-400 fill-current cursor-pointer"/>
+              </Link>
             </div>
           </div>
           
           <div className="grid grid-cols-1 gap-2 py-1 lg:grid-rows-3 text-white text-sm lg:text-left lg:justify-self-start lg:col-span-5 lg:gap-x-24 lg:grid-flow-col-dense">
-            <a><Link to='/'>Sobre mi</Link></a>
-            <a><Link to='/'>Sobre el proyecto</Link></a>
-            <a><Link to='/'>Contacto</Link></a>
+            <Link to='/'>Sobre mi</Link>
+            <Link to='/'>Sobre el proyecto</Link>
+            <Link to='/'>Contacto</Link>
           </div>
         </div>
         

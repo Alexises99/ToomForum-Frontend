@@ -7,8 +7,17 @@ import HomeCard from '../components/HomeCard';
 import Footer from '../components/Footer';
 import New from '../components/New';
 import Publication from '../components/Publication';
+import { useEffect } from 'react';
+import useAuth from '../hooks/useAuth';
 
 const Home = () => {
+
+  const { user, checkUser } = useAuth()
+
+  useEffect(() => {
+    checkUser()
+  }, [])
+
   return (
     <div>
       <Header />
@@ -58,7 +67,6 @@ const Home = () => {
                 </div>
               </div>
               
-              
             </div>
           </div>
         </section>
@@ -89,7 +97,8 @@ const Home = () => {
             <New />
           </div>
         </section>
-        <Footer />  
+        {user && <p>Hello {user?.username}</p>}
+        <Footer />
       </div>
     </div>
   )

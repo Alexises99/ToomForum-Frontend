@@ -13,6 +13,7 @@ module.exports = {
       backgroundImage: {
         'switch-image': 'url("https://images.pexels.com/photos/6073129/pexels-photo-6073129.jpeg?cs=srgb&dl=pexels-lukas-medvedevas-6073129.jpg&fm=jpg")',
         'cat-image': 'url("https://images.pexels.com/photos/4075410/pexels-photo-4075410.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")',
+        'dog-image': 'url("https://images.unsplash.com/photo-1593016250787-edf25b355001?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80")',
         'logo': 'url("./images/iconApp.png")'
       },
       colors: {
