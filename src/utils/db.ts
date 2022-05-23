@@ -6,7 +6,7 @@ const sequelize = new Sequelize(config.POSTGREESQL as string, {
   dialectOptions: {
     ssl: {
       require: true,
-      rejectUnathorized: false
+      rejectUnauthorized: false
     }
   },
   logging: false
