@@ -1,12 +1,13 @@
 export interface InputFieldProps {
   name: string
   label: string
-  value: string | number
+  value: any
   onChange: React.ChangeEventHandler<HTMLInputElement>
   className: string
   type: string
-  placeholder: string 
-  required?: boolean
+  placeholder?: string 
+  required?: boolean,
+  accept?: string
 }
 
 export interface FormProps {
@@ -17,9 +18,14 @@ export interface FormProps {
 
 export interface UserEntry {
   username: string,
-  password: string
+  password: string,
+}
+
+export interface UserEntryImage extends UserEntry {
+  imageId: number
 }
 
 export interface UserEntryAuth extends UserEntry {
   token: string
+  imageId?: number
 }

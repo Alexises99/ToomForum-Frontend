@@ -1,8 +1,10 @@
 import Form from "../components/Form"
 import InputField from "../components/InputField"
-import { useField } from "../hooks"
+import { useField, useFieldFile } from "../hooks"
 import logo from '../images/logo.png'
 import useAuth from '../hooks/useAuth';
+import axios, { AxiosRequestHeaders } from "axios";
+import { UserEntryImage } from "../types/users/users";
 
 const Signup = () => {
 
@@ -10,17 +12,35 @@ const Signup = () => {
   const {reset: resetPassword, ...password} = useField('password')
   const {reset: resetIsland, ...island} = useField('text')
   const {reset: resetFruit, ...fruit} = useField('text')
+  const {reset: resetImage, ...image} = useFieldFile()
 
   const {signUp, error} = useAuth()
 
-
   const handleSubmit = async () => {
-    const newUserEntry  = {
-      username: username.value,
-      password: password.value
+    
+    const formData = new FormData()
+    console.log(image.image)
+    if (image.image) {
+      formData.append('profileImage', image.image)
     }
-
+    const headers: AxiosRequestHeaders = {
+      "Content-Type": "form-data"
+    }
+    
+    const response = await axios.post('/api/images', formData, headers)
+    const newUserEntry: UserEntryImage  = {
+      username: username.value,
+      password: password.value,
+      imageId: response.data.imageId
+    }
+    
     signUp(newUserEntry)
+
+    resetUsername()
+    resetIsland()
+    resetPassword()
+    resetFruit()
+    resetImage()
     
   }
 
@@ -72,12 +92,13 @@ const Signup = () => {
                       </div>
                     </div>
                     <div className="mt-4">
-                      <label htmlFor="profileImage">Selecciona tu imagen de perfil</label>
-                      <input
+                    <input
                         type="file"
                         accept="image/"
+                        onChange={image.onChange}
                         name="profileImage"
                         className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+                      {image.value && <img className="w-24 h-24" src={image.value}/>}
                     </div>
                     <div className="mt-6">
                       <button

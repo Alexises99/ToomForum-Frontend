@@ -1,15 +1,16 @@
 import { InputFieldProps } from "../types/users/users"
 
-const InputField = ({name, label, value, onChange, className, type, placeholder, required}: InputFieldProps) => {
+const InputField = ({name, label, value, onChange, className, type, placeholder, required, accept}: InputFieldProps) => {
   
   if (required) {
     return (
       <div>
-        {label && <label htmlFor={name} className="block text-sm md:text-md text-gray-800">{label}</label>}
+        {label && <label htmlFor={name} className="block text-sm md:text-lg text-gray-800">{label}</label>}
         <input 
           type={type}
           onChange={onChange}
           name={name}
+          accept={accept}
           value={value}
           className={className}
           placeholder={placeholder}
@@ -20,7 +21,7 @@ const InputField = ({name, label, value, onChange, className, type, placeholder,
   else {
     return (
       <div>
-        {label && <label htmlFor={name} className="block text-sm text-gray-800">{label}</label>}
+        {label && <label htmlFor={name} className="block text-lg text-gray-800">{label}</label>}
         <input 
           type={type}
           onChange={onChange}

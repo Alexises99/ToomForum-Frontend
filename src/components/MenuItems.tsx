@@ -26,7 +26,13 @@ const MenuItems = ({showMenu, active}: MenuItemsProps) => {
         </>
         }
         {user &&
-          <li className="text-red-500"><Link to='/' onClick={logout}>Desconectarse</Link></li>
+          <div className="flex items-center flex-col">
+            <li className="text-red-500"><Link to='/' onClick={logout}>Desconectarse</Link></li>
+            <Link to='/profile' className="hover:scale-110 hover:cursor-pointer">
+              <img className="mt-3 h-16 w-16 rounded-full" src={`/api/images/${user.imageId}`} alt="avatar"/>
+            </Link>
+          </div>
+          
         }
        
     </ul>

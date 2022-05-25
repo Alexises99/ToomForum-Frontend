@@ -1,13 +1,13 @@
 import usersService from '../services/users'
 import loginService from '../services/login'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { UserEntry, UserEntryAuth } from '../types/users/users'
+import { UserEntry, UserEntryAuth, UserEntryImage } from '../types/users/users'
 import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react'
 
 interface AuthContextType {
   user?: UserEntryAuth,
   login: (user: UserEntry) => void
-  signUp: (user: UserEntry) => void
+  signUp: (user: UserEntryImage) => void
   checkUser: () => void,
   error?: any,
   logout: () => void
@@ -28,8 +28,6 @@ export function AuthProvider ({
   const navigate = useNavigate()
   const location = useLocation()
 
-  console.log(error)
-
   useEffect(() => {
     if (error) setError(null)
   }, [location.pathname])
@@ -44,10 +42,12 @@ export function AuthProvider ({
       .catch(err => setError(err))
   }
 
-  function signUp (user: UserEntry) {
+  function signUp (user: UserEntryImage) {
     usersService.create(user)
       .then((user) => {
         setUser(user)
+        console.log(user)
+        setLocalStorage(user)
         navigate('/')
       })
       .catch(err => setError(err))

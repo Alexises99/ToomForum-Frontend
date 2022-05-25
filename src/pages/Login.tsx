@@ -5,6 +5,7 @@ import InputField from '../components/InputField'
 import Form from '../components/Form'
 import { useNavigate } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
+import { UserEntry } from '../types/users/users'
 
 const Login = () => {
 
@@ -19,7 +20,7 @@ const Login = () => {
       resetUsername()
       resetPassword()
 
-      const userEntry = {
+      const userEntry: UserEntry = {
         username: username.value,
         password: password.value
       }
@@ -28,7 +29,7 @@ const Login = () => {
   }
 
     return (
-        <div className='grid lg:grid-cols-2'>
+        <div className='grid lg:grid-cols-2 mx-4'>
           <div className="mx-2 flex flex-col justify-center min-h-screen overflow-hidden">
             <div
               className="w-full p-6 m-auto bg-white border-t border-green-600 rounded shadow-lg shadow-green-800/50 lg:max-w-md">
@@ -51,17 +52,17 @@ const Login = () => {
                       placeholder='Introduce tu contrasena'
                       required={true}
                       {...password} />
-                    <Link to="" className="text-xs text-gray-600 hover:underline">Has olvidado la contrasena?</Link>
-                      <div className="mt-6">
-                        <button
-                          className="w-full px-4 py-2 tracking-wide text-white bg-cyan-700 rounded-md hover:bg-cyan-600 focus:outline-none focus:bg-cyan-600">
-                            Login
-                        </button>
-                      </div>
+                    <Link to="" className="text-xs text-gray-600 hover:underline md:text-lg">Has olvidado la contrasena?</Link>
+                    <div className="mt-6">
+                      <button
+                        className="w-full px-4 py-2 tracking-wide text-white bg-cyan-700 rounded-md hover:bg-cyan-600 focus:outline-none focus:bg-cyan-600">
+                          Login
+                      </button>
+                    </div>
                   </div>
                 </Form>
                 
-                <p className="mt-8 text-xs font-light text-center text-gray-700"> No tienes cuenta? <Link to="/signup"
+                <p className="mt-8 text-xs font-light text-center text-gray-700 md:text-lg"> No tienes cuenta? <Link to="/signup"
                   className="font-medium text-green-600 hover:underline">Registrarse</Link></p>
               </div>
             </div>
