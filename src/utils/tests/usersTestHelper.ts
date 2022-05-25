@@ -1,19 +1,22 @@
 import { User } from "../../models";
-import { UserEntry } from "../../models/user";
+import {  UserEntryWithImage } from "../../models/user";
 import * as bcrypt from 'bcrypt'
 
-const initialUsers: Array<UserEntry> = [
+const initialUsers: Array<UserEntryWithImage> = [
   {
     username: 'elubuntin',
-    password: 'pinguino'
+    password: 'pinguino',
+    image_id: null
   },
   {
     username: 'lowrins',
-    password: 'tortuga'
+    password: 'tortuga',
+    image_id: null
   },
   {
     username: 'ranaldo',
-    password: 'culero'
+    password: 'culero',
+    image_id: null
   },
 ]
 
@@ -25,8 +28,9 @@ const usersInDb = async (): Promise<Array<User>> => {
 const createUsers = (): Promise<Array<User>> => {
   const createdUsers = initialUsers.map(async user => {
     const password = await bcrypt.hash(user.password, 10)
-    return await User.create({username: user.username, password})
+    return await User.create({username: user.username, password, imageId: null})
   })
+
   return Promise.all(createdUsers)
 }
 

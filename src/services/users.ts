@@ -1,7 +1,7 @@
 import { UniqueConstraintError, ValidationError } from "sequelize"
 import { UserBadRequestException, UserNotFoundException } from "../exceptions/Users"
-import { UserEntry } from "../models/user"
-import { User } from "../models"
+import { UserEntry, UserEntryWithImage } from "../models/user"
+import { User, Image } from "../models"
 import * as bcrypt from 'bcrypt'
 
 const getUsers = async (): Promise<Array<User>> => {
@@ -13,18 +13,20 @@ const getNonSensitiveUserInformation = (users: Array<User> | User) => {
   if (users instanceof Array) {
     return users.map(user => {
       return {
-        username: user.username
+        username: user.username,
       }
     })
   } else {
     return {
-      username: users.username
+      username: users.username,
     }
   }
 }
 
 const getSingleUser = async (username: string): Promise<User> => {
-  const user = await User.findByPk(username)
+  const user = await User.findByPk(username, {
+    attributes: { exclude: ['password']}
+  })
   if (user){
     return user
   } else {
@@ -32,11 +34,12 @@ const getSingleUser = async (username: string): Promise<User> => {
   }
 }
 
-const addUser = async (newUserEntry: UserEntry): Promise<User | void>  => {
+const addUser = async (newUserEntry: UserEntryWithImage): Promise<User | void>  => {
   try {
     const saltRounds = 10
     newUserEntry.password = await bcrypt.hash(newUserEntry.password, saltRounds)
-    const user = await User.create(newUserEntry)
+    const image = await Image.findByPk(newUserEntry.image_id as number)
+    const user = await User.create({...newUserEntry, imageId: image?.id as number})
     return user
   } catch (err) {
     if (err instanceof UniqueConstraintError) {

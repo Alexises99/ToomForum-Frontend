@@ -1,16 +1,16 @@
 GET http://localhost:3001/api/users
 
 ###
-GET http://localhost:3001/api/users/ubuntininin
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVidW50aW5pbmluIiwiaWF0IjoxNjUzMDcyMzQ0fQ.K4S8IeJJ-gUtI08AJHFUk6opQ6F8ta1SQJLa9L7aEHk
+GET http://localhost:3001/api/users/ranaldo
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJhbmFsZG8iLCJpYXQiOjE2NTM0OTk0OTd9.gmbjniNIgpElMivIIhoGrOsIKuODRfdDK49CDhr5ctk
 
 ###
 POST http://localhost:3001/api/users
 Content-Type: application/json
 
 {
-  "username": "lowrins",
-  "password": "123123"
+  "username": "lowrinss",
+  "password": "123123s"
 }
 
 ###

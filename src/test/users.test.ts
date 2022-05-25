@@ -27,7 +27,7 @@ describe('Users tests', () => {
       .get('/api/users')
       .expect(200)
       .expect('Content-Type', /application\/json/)
-      
+    
     expect(response.body).toEqual(
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       expect.arrayContaining(userTestHelper.initialUsers.map(user => expect.objectContaining({username: user.username})))
@@ -80,8 +80,9 @@ describe('Users tests', () => {
       .expect(200)
       .expect('Content-Type', /application\/json/)
     
+    const {username, image_id: imageId} = user
     expect(responseApi.body).toBeDefined()
-    expect(user).toMatchObject(responseApi.body)
+    expect({username, imageId}).toMatchObject(responseApi.body)
   })
 
   test('400 when dont provide params and the valid message', async () => {

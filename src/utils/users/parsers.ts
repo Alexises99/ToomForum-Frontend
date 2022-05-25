@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { UserBadRequestException} from "../../exceptions/Users";
-import {UserEntry} from "../../models/user";
+import { UserEntryWithImage } from "../../models/user";
 import * as check from '../checkers'
 
-const toNewUser = (object: any): UserEntry=> {
-  const toNewUser: UserEntry = {
+const toNewUser = (object: any): UserEntryWithImage=> {
+  const toNewUser: UserEntryWithImage = {
     username: parseUsername(object.username),
-    password: parsePassword(object.password)
+    password: parsePassword(object.password),
+    image_id: parseImageId(object.imageId)
   }
   return toNewUser
 }
@@ -24,6 +25,13 @@ const parsePassword = (password: any): string => {
     throw new UserBadRequestException(`Incorrect or missing password ${password}`)
   }
   return password
+}
+
+const parseImageId = (imageId: any): number | null => {
+  if (!imageId || !check.isNumber(imageId)) {
+    return null
+  }
+  return imageId
 }
 
 export {

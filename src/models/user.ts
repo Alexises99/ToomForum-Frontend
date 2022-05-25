@@ -4,7 +4,11 @@ import {sequelize} from '../utils/db'
 
 interface UserEntry {
   username: string
-  password: string
+  password: string,
+}
+
+interface UserEntryWithImage extends UserEntry{
+  image_id: number | null
 }
 
 type NonSensitiveInfo = Omit<UserEntry, 'password'>
@@ -13,6 +17,7 @@ type NonSensitiveInfo = Omit<UserEntry, 'password'>
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>>{
   declare username: string
   declare password: string
+  declare imageId: number | null
 }
 
 User.init({
@@ -23,7 +28,14 @@ User.init({
   password: {
     type: DataTypes.TEXT,
     allowNull: false,
-    unique: true
+  },
+  imageId: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+      model: 'images',
+      key: 'id'
+    }
   }
 }, {
   sequelize,
@@ -32,8 +44,11 @@ User.init({
   modelName: 'user',
 })
 
+
+
 export  {
   User,
   NonSensitiveInfo,
-  UserEntry
+  UserEntry,
+  UserEntryWithImage
 }

@@ -1,9 +1,9 @@
 import { RequestHandler, Router} from "express"
-import { User } from "../models/user"
 import usersService from '../services/users'
 import { toNewUser } from "../utils/users/parsers"
 import tokens from "../middlewares/tokens"
 import NotAuthorizedException from "../exceptions/NotAuthorized"
+//import { User } from "../models"
 
 const usersRouter = Router()
 
@@ -16,8 +16,8 @@ usersRouter.get('/', (async (_req, res) => {
 usersRouter.post('/', (async (req, res, next) => {
   try {
     const newUserEntry = toNewUser(req.body)
-    const user = await usersService.addUser(newUserEntry as User)
-    res.status(201).json(usersService.getNonSensitiveUserInformation(user as User))
+    const user = await usersService.addUser(newUserEntry)
+    res.status(201).json(user)
   } catch (err) {
     next(err)
   }
@@ -27,7 +27,8 @@ usersRouter.get('/:username', tokens.getUserFromToken, (async (req, res, next) =
   try {
     if(req.user?.username === req.params.username) {
       const user = await usersService.getSingleUser(req.params.username)
-      res.json(usersService.getNonSensitiveUserInformation(user))
+      //res.json(usersService.getNonSensitiveUserInformation(user))
+      res.json(user)
     } else {
       next(new NotAuthorizedException('not authorized, you are not this user'))
     }

@@ -3,15 +3,13 @@ import {sequelize} from '../utils/db'
 
 
 interface ImageType {
-  id: string
-  type: string,
+  id: number
   name: string,
   data: Buffer
 }
 
 class Image extends Model<InferAttributes<Image>, InferCreationAttributes<Image>>{
   declare id: CreationOptional<number>
-  declare type: string
   declare data: Buffer
   declare name: string
 }
@@ -22,11 +20,8 @@ Image.init({
     primaryKey: true,
     autoIncrement: true,
   },
-  type: {
-    type: DataTypes.STRING
-  },
   data: {
-    type: DataTypes.BLOB('long')
+    type: DataTypes.BLOB
   },
   name: {
     type: DataTypes.TEXT,
