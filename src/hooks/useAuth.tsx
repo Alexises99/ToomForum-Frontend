@@ -1,7 +1,7 @@
 import usersService from '../services/users'
 import loginService from '../services/login'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { UserEntry, UserEntryAuth, UserEntryImage } from '../types/users/users'
+import { UserEntry, UserEntryAuth, UserEntryImage } from '../interfaces/users/users'
 import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react'
 
 interface AuthContextType {
@@ -24,6 +24,8 @@ export function AuthProvider ({
 }): JSX.Element {
   const [ user, setUser ] = useState<UserEntryAuth>()
   const [ error, setError ] = useState<any>()
+
+
   
   const navigate = useNavigate()
   const location = useLocation()
@@ -37,6 +39,7 @@ export function AuthProvider ({
       .then((user) => {
         setUser(user)
         setLocalStorage(user)
+        
         navigate('/')
       })
       .catch(err => setError(err))
@@ -46,7 +49,6 @@ export function AuthProvider ({
     usersService.create(user)
       .then((user) => {
         setUser(user)
-        console.log(user)
         setLocalStorage(user)
         navigate('/')
       })

@@ -5,13 +5,14 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { AuthProvider } from './hooks/useAuth';
 
-function App() {
+
+const App = () => {
 
   return (
     <>
       <AuthProvider>
         <NavBar />
-      
+
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/login' element={<Login />} />

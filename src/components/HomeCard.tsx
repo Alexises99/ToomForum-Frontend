@@ -1,4 +1,4 @@
-import { HomeCardProps } from "../types/nav/Home"
+import { HomeCardProps } from "../interfaces/nav/Home.interface"
 
 const HomeCard = ({img, title, description}: HomeCardProps) => {
   return (

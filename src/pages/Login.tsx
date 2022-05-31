@@ -5,7 +5,7 @@ import InputField from '../components/InputField'
 import Form from '../components/Form'
 import { useNavigate } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
-import { UserEntry } from '../types/users/users'
+import { UserEntry } from '../interfaces/users/users'
 
 const Login = () => {
 
@@ -17,16 +17,19 @@ const Login = () => {
     const {login, error} = useAuth()
 
     const handleSubmit = async () => {
-      resetUsername()
-      resetPassword()
-
+    
       const userEntry: UserEntry = {
         username: username.value,
         password: password.value
       }
       
       login(userEntry)
-  }
+
+      if (!error) {
+        resetUsername()
+        resetPassword()
+      }
+    }
 
     return (
         <div className='grid lg:grid-cols-2 mx-4'>
@@ -46,13 +49,13 @@ const Login = () => {
                     {...username} />
                   <div className="mt-4">
                     <InputField
-                      label='Contrasena'
+                      label='Contraseña'
                       className='block w-full px-4 py-2 mt-2 text-cyan-700 bg-white border rounded-md focus:border-cyan-400 focus:ring-cyan-300 focus:outline-none focus:ring focus:ring-opacity-40'
                       name='password'
-                      placeholder='Introduce tu contrasena'
+                      placeholder='Introduce tu contraseña'
                       required={true}
                       {...password} />
-                    <Link to="" className="text-xs text-gray-600 hover:underline md:text-lg">Has olvidado la contrasena?</Link>
+                    <Link to="" className="text-sm text-cyan-600 hover:underline md:text-lg">Has olvidado la contrasena?</Link>
                     <div className="mt-6">
                       <button
                         className="w-full px-4 py-2 tracking-wide text-white bg-cyan-700 rounded-md hover:bg-cyan-600 focus:outline-none focus:bg-cyan-600">
@@ -62,8 +65,8 @@ const Login = () => {
                   </div>
                 </Form>
                 
-                <p className="mt-8 text-xs font-light text-center text-gray-700 md:text-lg"> No tienes cuenta? <Link to="/signup"
-                  className="font-medium text-green-600 hover:underline">Registrarse</Link></p>
+                <p className="mt-8 text-md font-light text-center text-gray-700 md:text-lg"> No tienes cuenta? <Link to="/signup"
+                  className="font-medium text-green-600 hover:underline">Registrate</Link></p>
               </div>
             </div>
           <div className='bg-cat-image hidden lg:block w-full h-full bg-cover'>

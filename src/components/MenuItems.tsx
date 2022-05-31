@@ -1,10 +1,7 @@
 import { Link } from "react-router-dom"
 import useAuth from "../hooks/useAuth"
+import { MenuItemsProps } from "../interfaces/nav/navElemet.interface"
 
-interface MenuItemsProps {
-  showMenu: () => void,
-  active: boolean
-}
 
 const MenuItems = ({showMenu, active}: MenuItemsProps) => {
 

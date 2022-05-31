@@ -22,10 +22,9 @@ export interface UserEntry {
 }
 
 export interface UserEntryImage extends UserEntry {
-  imageId: number
+  imageId?: number
 }
 
-export interface UserEntryAuth extends UserEntry {
+export interface UserEntryAuth extends UserEntryImage {
   token: string
-  imageId?: number
 }

@@ -3,12 +3,10 @@ import logoIcon from '../images/iconApp.png'
 import MenuItems from "./MenuItems"
 import { useState } from "react"
 import useAuth from "../hooks/useAuth"
-import imageService from "../services/image"
 
 const NavBar = () => {
 
   const [active, setActive] = useState(false)
-  const [image, setImage] = useState()
 
   const { user, logout } = useAuth()
 
@@ -19,7 +17,7 @@ const NavBar = () => {
   return (
     <div className="fixed w-full flex justify-between p-4 items-center bg-black/50">
 
-      <img className="w-6 h-6 scale-150" src={logoIcon} />
+      <Link to="/"><img className="w-8 h-8 md:w-12 md:h-12 scale-150" src={logoIcon} /></Link>
 
       <nav>
         <svg 

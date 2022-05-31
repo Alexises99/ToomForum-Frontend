@@ -4,7 +4,7 @@ import { useField, useFieldFile } from "../hooks"
 import logo from '../images/logo.png'
 import useAuth from '../hooks/useAuth';
 import axios, { AxiosRequestHeaders } from "axios";
-import { UserEntryImage } from "../types/users/users";
+import { UserEntryImage } from "../interfaces/users/users";
 
 const Signup = () => {
 
@@ -19,7 +19,7 @@ const Signup = () => {
   const handleSubmit = async () => {
     
     const formData = new FormData()
-    console.log(image.image)
+    
     if (image.image) {
       formData.append('profileImage', image.image)
     }
@@ -57,7 +57,7 @@ const Signup = () => {
                 <Form className='mt-6' handleSubmit={handleSubmit}>
                   {error && <p className="text-center text-red-600">{error.response.data.message}</p>}
                     <InputField
-                      label='Usuario'
+                      label='Usuario: '
                       className='block w-full px-4 py-2 mt-2 text-cyan-700 bg-white border rounded-md focus:border-cyan-400 focus:ring-cyan-300 focus:outline-none focus:ring focus:ring-opacity-40'
                       name='username'
                       placeholder='Introduce un nombre de usuario'
@@ -65,7 +65,7 @@ const Signup = () => {
                       {...username} />
                     <div className="mt-4">
                       <InputField
-                        label='Contrasena'
+                        label='Contraseña: '
                         className='block w-full px-4 py-2 mt-2 text-cyan-700 bg-white border rounded-md focus:border-cyan-400 focus:ring-cyan-300 focus:outline-none focus:ring focus:ring-opacity-40'
                         name='password'
                         placeholder='Introduce una contrasena'
@@ -74,7 +74,7 @@ const Signup = () => {
                     <div className="mt-4 grid lg:grid-cols-2">
                       <div className="mr-2">
                         <InputField
-                           label='Nombre de tu isla'
+                           label='Nombre de tu isla: '
                             className='block w-full px-4 py-2 mt-2 text-cyan-700 bg-white border rounded-md focus:border-cyan-400 focus:ring-cyan-300 focus:outline-none focus:ring focus:ring-opacity-40'
                             name='password'
                             placeholder='Introduce el nombre de tu isla'
@@ -83,7 +83,7 @@ const Signup = () => {
                       </div>
                       <div className="mt-4 lg:mt-0 lg:ml-2">
                         <InputField
-                          label='Que fruta tienes?'
+                          label='Indica tu fruta: '
                           className='block w-full px-4 py-2 mt-2 text-cyan-700 bg-white border rounded-md focus:border-cyan-400 focus:ring-cyan-300 focus:outline-none focus:ring focus:ring-opacity-40'
                           name='password'
                           placeholder='Introduce la fruta de tu isla'
@@ -91,14 +91,14 @@ const Signup = () => {
                           {...fruit} />
                       </div>
                     </div>
-                    <div className="mt-4">
+                    <div className="mt-4 flex flex-col items-center">
                     <input
                         type="file"
                         accept="image/"
                         onChange={image.onChange}
                         name="profileImage"
                         className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
-                      {image.value && <img className="w-24 h-24" src={image.value}/>}
+                    {image.value && <img className="w-28 h-28 rounded-full" src={image.value}/>}
                     </div>
                     <div className="mt-6">
                       <button

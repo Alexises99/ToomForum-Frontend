@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios"
-import { UserEntry } from "../types/users/users"
+import { UserEntry } from "../interfaces/users/users"
 
 const baseUrl = '/api/users'
 
