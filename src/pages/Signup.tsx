@@ -92,12 +92,14 @@ const Signup = () => {
                       </div>
                     </div>
                     <div className="mt-4 flex flex-col items-center">
+                    <label htmlFor="profileImage" className="text-sm md:text-lg text-gray-800">Selecciona tu avatar <span className="text-red-400">*</span></label>
                     <input
                         type="file"
                         accept="image/"
                         onChange={image.onChange}
                         name="profileImage"
-                        className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+                        className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" 
+                        required/>
                     {image.value && <img className="w-28 h-28 rounded-full" src={image.value}/>}
                     </div>
                     <div className="mt-6">
