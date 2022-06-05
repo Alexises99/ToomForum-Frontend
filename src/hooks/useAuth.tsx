@@ -1,11 +1,8 @@
 import usersService from "../services/users"
+import newsService from "../services/new"
 import loginService from "../services/login"
 import { useNavigate, useLocation } from "react-router-dom"
-import {
-  UserEntry,
-  UserEntryAuth,
-  UserEntryImage,
-} from "../interfaces/users/users"
+import { UserEntry, UserEntryWithIsland } from "../interfaces/users/users"
 import {
   createContext,
   ReactNode,
@@ -16,9 +13,9 @@ import {
 } from "react"
 
 interface AuthContextType {
-  user?: UserEntryAuth
+  user?: UserEntry
   login: (user: UserEntry) => void
-  signUp: (user: UserEntryImage | UserEntry) => void
+  signUp: (user: UserEntryWithIsland) => void
   checkUser: () => void
   error?: any
   logout: () => void
@@ -32,7 +29,7 @@ export function AuthProvider({
 }: {
   children: ReactNode
 }): JSX.Element {
-  const [user, setUser] = useState<UserEntryAuth>()
+  const [user, setUser] = useState<UserEntry>()
   const [error, setError] = useState<any>()
 
   const navigate = useNavigate()
@@ -48,24 +45,26 @@ export function AuthProvider({
       .then((user) => {
         setUser(user)
         setLocalStorage(user)
-
         navigate("/")
       })
       .catch((err) => setError(err))
   }
 
-  function signUp(user: UserEntryImage | UserEntry) {
+  function signUp(user: UserEntryWithIsland) {
     usersService
       .create(user)
-      .then((user) => {
-        setUser(user)
-        setLocalStorage(user)
-        navigate("/")
+      .then(() => {
+        loginService.login(user).then((userLogged) => {
+          setUser(userLogged)
+          setLocalStorage(userLogged)
+          console.log(userLogged)
+          navigate("/")
+        })
       })
       .catch((err) => setError(err))
   }
 
-  function setLocalStorage(user: UserEntryAuth) {
+  function setLocalStorage(user: UserEntry) {
     if (user) {
       global.window.localStorage.setItem(
         "loggedToomForum",
@@ -86,9 +85,8 @@ export function AuthProvider({
   function checkUser() {
     const user = getLocalStorage()
     if (user) {
-      const userRecover: UserEntryAuth = JSON.parse(user)
+      const userRecover: UserEntry = JSON.parse(user)
       setUser(userRecover)
-      usersService.setToken(userRecover.token)
     }
   }
 

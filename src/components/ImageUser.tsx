@@ -5,14 +5,15 @@ const ImageUser = ({ className, user }: UserImageProps) => {
     className,
     alt: "avatar",
   }
+  console.log(user)
 
-  return user && user.imageId === null ? (
+  return !user ? (
     <img
       {...attributes}
       src="https://www.svgrepo.com/show/416739/account-customize-man.svg"
     />
   ) : (
-    <img {...attributes} src={`/api/images/${user.imageId}`} />
+    <img {...attributes} src={`/api/images/${user}`} />
   )
 }
 

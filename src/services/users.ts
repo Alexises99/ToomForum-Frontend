@@ -1,9 +1,9 @@
 import axios, { AxiosRequestConfig } from "axios"
 import { UserEntry } from "../interfaces/users/users"
 
-const baseUrl = '/api/users'
+const baseUrl = "/api/users"
 
-let token = ''
+let token = ""
 
 const setToken = (newToken: string) => {
   token = `bearer ${newToken}`
@@ -11,8 +11,8 @@ const setToken = (newToken: string) => {
 
 const config: AxiosRequestConfig = {
   headers: {
-    Authorization: token
-  }
+    Authorization: token,
+  },
 }
 
 const getAll = async () => {
@@ -20,8 +20,8 @@ const getAll = async () => {
   return response.data
 }
 
-const getOne = async (username: string) => {
-  const response = await axios.get(`${baseUrl}/${username}`, config)
+const getOne = async (id: string) => {
+  const response = await axios.get(`${baseUrl}/${id}`, config)
   return response.data
 }
 
@@ -31,7 +31,7 @@ const create = async (user: UserEntry) => {
 }
 
 const update = async (user: UserEntry) => {
-  const response = await axios.put(`${baseUrl}/${user.username}`, user, config)
+  const response = await axios.put(`${baseUrl}/${user.id}`, user, config)
   return response.data
 }
 
@@ -40,5 +40,5 @@ export default {
   getOne,
   create,
   update,
-  setToken
+  setToken,
 }

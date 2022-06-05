@@ -30,7 +30,7 @@ const MenuItems = ({ showMenu, active }: MenuItemsProps) => {
         />
       </svg>
       <li>
-        <Link to="/">Nabos</Link>
+        <Link to="/nabos">Nabos</Link>
       </li>
       <li>
         <Link to="/">Eventos</Link>
@@ -59,7 +59,10 @@ const MenuItems = ({ showMenu, active }: MenuItemsProps) => {
             </Link>
           </li>
           <Link to="/profile" className="hover:scale-110 hover:cursor-pointer">
-            <ImageUser className="mt-3 h-16 w-16 rounded-full" user={user} />
+            <ImageUser
+              className="mt-3 h-16 w-16 rounded-full"
+              user={user.ImageId as number}
+            />
           </Link>
         </div>
       )}

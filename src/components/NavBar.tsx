@@ -15,7 +15,7 @@ const NavBar = () => {
   }
 
   return (
-    <div className="fixed w-full flex justify-between p-4 items-center bg-black/50">
+    <div className="top-0 sticky w-full flex justify-between p-4 items-center bg-black/80">
       <Link to="/">
         <img className="w-8 h-8 md:w-12 md:h-12 scale-150" src={logoIcon} />
       </Link>
@@ -23,7 +23,7 @@ const NavBar = () => {
       <nav>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6 absolute right-6 md:hidden top-4 scale-150 text-white"
+          className="h-6 w-6 md:hidden scale-150 text-white"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -38,7 +38,7 @@ const NavBar = () => {
         </svg>
         <ul className="hidden md:flex gap-8 p-4 uppercase text-white text-2xl">
           <li className="hover:scale-110 hover:font-semibold">
-            <Link to="/">Nabos</Link>
+            <Link to="/nabos">Nabos</Link>
           </li>
           <li className="hover:scale-110 hover:font-semibold">
             <Link to="/">Eventos</Link>
@@ -68,7 +68,10 @@ const NavBar = () => {
               to="/profile"
               className="hover:scale-110 hover:cursor-pointer"
             >
-              <ImageUser className="h-12 w-12 rounded-full" user={user} />
+              <ImageUser
+                className="h-12 w-12 rounded-full"
+                user={user.ImageId as number}
+              />
             </Link>
           </div>
         )}

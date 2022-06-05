@@ -15,14 +15,15 @@ export interface FormProps {
 }
 
 export interface UserEntry {
+  id?: number
   username: string
   password: string
+  ImageId?: number | null
+  token?: string
 }
 
-export interface UserEntryImage extends UserEntry {
-  imageId: number
-}
-
-export interface UserEntryAuth extends UserEntryImage {
-  token: string
+export interface UserEntryWithIsland extends UserEntry {
+  islandName: string
+  fruit: string
+  dreamcode: string
 }

@@ -1,12 +1,12 @@
 import { useField } from "../hooks"
 import logo from "../images/logo.png"
 import { Link } from "react-router-dom"
-import { useNavigate } from "react-router-dom"
 import useAuth from "../hooks/useAuth"
 import { UserEntry } from "../interfaces/users/users"
 import { useForm } from "react-hook-form"
 import Notification from "../components/Notification"
 import { useEffect } from "react"
+import SubmitBottom from "../components/SubmitBotton"
 
 const Login = () => {
   const { reset: resetUsername, ...username } = useField("text")
@@ -42,9 +42,13 @@ const Login = () => {
 
   return (
     <div className="grid lg:grid-cols-2 mx-4">
-      <div className="mx-2 flex flex-col justify-center min-h-screen overflow-hidden">
-        <div className="w-full p-6 m-auto bg-white border-t border-green-600 rounded shadow-lg shadow-green-800/50 lg:max-w-md">
-          <img className="mx-auto" src={logo} />
+      <div className="mx-2 flex flex-col justify-center">
+        <div className="w-full p-6 m-auto lg:bg-white lg:border-t lg:border-green-600 lg:rounded lg:shadow-lg lg:shadow-green-800/50 lg:max-w-md">
+          <img
+            src={logo}
+            alt="logo"
+            className="h-32 w-56 mx-auto md:w-96 md:h-44"
+          />
 
           <form className="mt-6" onSubmit={handleSubmit(handleLogin)}>
             {error && (
@@ -92,23 +96,21 @@ const Login = () => {
               </div>
               <div className="text-center mt-3">
                 <Link
-                  to=""
+                  to="/recover-password"
                   className="text-md text-cyan-600 hover:underline md:text-xl"
                 >
                   Has olvidado la contrasena?
                 </Link>
               </div>
 
-              <div className="mt-6">
-                <button className="w-full px-4 py-2 tracking-wide text-white bg-cyan-700 rounded-md hover:bg-cyan-600 focus:outline-none focus:bg-cyan-600">
-                  Login
-                </button>
+              <div className="mt-3">
+                <SubmitBottom label="Iniciar Sesion" />
               </div>
             </div>
           </form>
 
           <p className="mt-8 text-md font-light text-center text-gray-700 md:text-lg">
-            No tienes cuenta?
+            No tienes cuenta? {"  "}
             <Link
               to="/signup"
               className="font-medium text-green-600 hover:underline"
@@ -118,7 +120,7 @@ const Login = () => {
           </p>
         </div>
       </div>
-      <div className="bg-cat-image hidden lg:block w-full h-full bg-cover"></div>
+      <div className="bg-cat-image hidden lg:h-screen lg:block w-full h-full bg-cover"></div>
     </div>
   )
 }
